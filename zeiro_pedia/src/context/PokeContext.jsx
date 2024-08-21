@@ -1,21 +1,33 @@
 import { createContext, useState, useEffect } from "react";
 
-let nombrePokemonAPI = "riulu";
-let url = `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`;
+// Crear el contexto
+export const PokeContext = createContext();
 
-const PokeContext = createContext();
+export function PokeContextProvider({ children, nombrePokemonAPI }) {
+  const [pokemonData, setPokemonData] = useState(null);
 
-export function PokeContextProvider() {
-  function pedirInforPokemon() {
+  function pedirInforPokemon(nombrePokemon) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemon.toLowerCase()}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        // Aquí puedes manejar la data que recibas, mostrarla en tu app, etc.
+        setPokemonData(data);
+        console.log(data)
       })
       .catch((error) => {
         console.error("Error al obtener la información del Pokémon:", error);
       });
   }
-  return 0;
+
+  useEffect(() => {
+    if (nombrePokemonAPI) {
+      pedirInforPokemon(nombrePokemonAPI); // Usamos la prop para buscar el Pokémon
+    }
+  }, [nombrePokemonAPI]);
+
+  return (
+    <PokeContext.Provider value={{ pokemonData, pedirInforPokemon }}>
+      {children}
+    </PokeContext.Provider>
+  );
 }
