@@ -4,20 +4,16 @@ import { PokeContext } from "../context/PokeContext";
 import {
   Button,
   Card,
-  CardBody,
-  CardTitle,
   Form,
-  Row,
-  Col,
 } from "react-bootstrap";
 
 function PokeForm() {
   const [nombrePokemon, setnombrePokemon] = useState("");
-  const { pedirInforPokemon } = useContext(PokeContext);
+  const { handleFormSubmit } = useContext(PokeContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    pedirInforPokemon(
+    handleFormSubmit(
       nombrePokemon
     );
     setnombrePokemon("");
