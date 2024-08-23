@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import PokeForm from "./components/PokeForm";
 import PokeInfo from "./components/PokeInfo";
 import PokeStats from "./components/PokeStats";
+import PokeSpinner from "./components/PokeSpinner";
+import PokeError from "./components/PokeError";
 import { PokeContext } from "./context/PokeContext";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 function App() {
-  const { submitted } = useContext(PokeContext);
+  const { submitted, loading, hasError } = useContext(PokeContext);
 
   return (
     <Container
@@ -18,13 +20,18 @@ function App() {
         overflowX: "hidden",
       }}
     >
-      {!submitted ? (
-        <PokeForm />
-      ) : (
-        <div>
-          <PokeInfo />
-          <PokeStats />
-        </div>
+      {loading && <PokeSpinner />}
+      {!loading && !submitted && !hasError && <PokeForm />}
+      {!loading && hasError && <PokeError />}
+      {!loading && submitted && !hasError && (
+        <Row className="mt-4">
+          <Col xs={12} md={7}>
+            <PokeInfo />
+          </Col>
+          <Col xs={12} md={5}>
+            <PokeStats />
+          </Col>
+        </Row>
       )}
     </Container>
   );

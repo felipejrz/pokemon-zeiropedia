@@ -1,13 +1,10 @@
 import React from "react";
-import { Alert, Spinner } from "react-bootstrap";
-
 
 function PokeError() {
   return (
-    <Spinner>
-      <Spinner animation="border" />
-    </Spinner>
-
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+      <h3>Error: Pokémon no encontrado.</h3>
+    </div>
   );
 }
 
