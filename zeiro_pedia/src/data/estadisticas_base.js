@@ -1,9 +1,9 @@
 export const data = {
     hp: "PS",
     attack: "Ataque",
-    defense: "Defensa",
-    speed: "Velosidad",
     "special-attack": "Atq. Especial",
+    defense: "Defensa",
     "special-defense": "Def. Especial",
+    speed: "Velocidad",
 
 }

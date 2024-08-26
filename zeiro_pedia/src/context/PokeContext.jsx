@@ -1,61 +1,105 @@
 import { createContext, useState, useEffect } from "react";
+import { useForm } from "../hook/useForm";
 
 export const PokeContext = createContext();
 
 export function PokeContextProvider({ children }) {
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const [pokemonData, setPokemonData] = useState(null);
-  const [pokemonName, setPokemonName] = useState("");
+  const [offset, setOffset] = useState(0);
+  const [allPokemon, setAllPokemon] = useState([]);
+  const [globalPokemon, setGlobalPokemon] = useState([]);
+  const { valueSearch, onInputChange, onResetForm } = useForm({
+    valueSearch: "",
+  });
 
-  function pedirInforPokemon(nombrePokemon) {
-    let formattedName = nombrePokemon.toLowerCase().replace(/\s+/g, '-');
-    let url = `https://pokeapi.co/api/v2/pokemon/${formattedName}`;
-    
+  const [loading, setLoading] = useState(true);
+
+  const baseUrl = "https://pokeapi.co/api/v2/";
+
+  // Función fetchWithRetry
+  const fetchWithRetry = async (url, retries = 3, delay = 1000) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        return await response.json();
+      } catch (error) {
+        if (i === retries - 1) throw error; // Reintentar después del último intento
+        await new Promise(resolve => setTimeout(resolve, delay)); // Esperar antes de reintentar
+      }
+    }
+  };
+
+  const fetchPokemonData = async (url) => {
+    try {
+      const { results } = await fetchWithRetry(url);
+
+      const pokemonData = await Promise.all(
+        results.map(async (pokemon) => {
+          try {
+            return await fetchWithRetry(pokemon.url);
+          } catch (error) {
+            console.error(`Error fetching Pokémon data: ${error.message}`);
+            return null;
+          }
+        })
+      );
+
+      return pokemonData.filter(pokemon => pokemon !== null); // Filtrar resultados nulos
+    } catch (error) {
+      console.error("Error al obtener datos de Pokémon:", error);
+      return [];
+    }
+  };
+
+  const getAllPokemon = async (limit = 50) => {
     setLoading(true);
-    setHasError(false);
-    setPokemonData(null);
+    try {
+      const url = `${baseUrl}pokemon?limit=${limit}&offset=${offset}`;
+      const pokemonData = await fetchPokemonData(url);
+      setAllPokemon(prevState => [...prevState, ...pokemonData]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Pokemon no encontrado");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPokemonData(data);
-        setHasError(false);
-      })
-      .catch((error) => {
-        console.error("Error al obtener la información del Pokémon:", error);
-        setHasError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
+  const getGlobalPokemon = async () => {
+    setLoading(true);
+    try {
+      const url = `${baseUrl}pokemon?limit=1000&offset=0`;
+      const pokemonData = await fetchPokemonData(url);
+      setGlobalPokemon(pokemonData);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getPokemonById = async (id) => {
+    try {
+      return await fetchWithRetry(`${baseUrl}pokemon/${id}`);
+    } catch (error) {
+      console.error(`Error fetching Pokémon with ID ${id}:`, error);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    if (pokemonName) {
-      pedirInforPokemon(pokemonName);
-    }
-  }, [pokemonName]);
+    getAllPokemon();
+  }, [offset]);
 
-  const handleFormSubmit = (name) => {
-    setPokemonName(name);
-    setSubmitted(true);
-  };
+  useEffect(() => {
+    getGlobalPokemon();
+  }, []);
 
   return (
     <PokeContext.Provider
       value={{
-        pokemonData,
-        handleFormSubmit,
-        submitted,
+        valueSearch,
+        onInputChange,
+        onResetForm,
+        allPokemon,
+        globalPokemon,
+        getPokemonById,
         loading,
-        hasError,
       }}
     >
       {children}

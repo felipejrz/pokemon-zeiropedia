@@ -2,30 +2,31 @@ import { useContext } from "react";
 import { PokeContext } from "../context/PokeContext";
 import { Card, Row, Col, Image, ListGroup } from "react-bootstrap";
 import Types from "./Types";
-import PokeError from "./PokeError";
 import PokeAbilities from "./PokeAbilities";
-import PokeSpinner from "./PokeSpinner"; // Asegúrate de tener este componente
+import PokeError from "./PokeError";
+import PokeSpinner from "./PokeSpinner";
+import PokeCard from "./PokeCard";
 
 function PokeInfo() {
   const { pokemonData, loading, hasError } = useContext(PokeContext);
 
-  // Mostrar el spinner si estamos cargando
   if (loading) {
     return <PokeSpinner />;
   }
 
-  // Mostrar el error si lo hubo
   if (hasError || !pokemonData) {
     return <PokeError />;
   }
+  {console.log(pokemonData.species.url)}
 
-  // Renderizar la información del Pokémon si todo está bien
   return (
-    <Card border="warning" className="mb-4 shadow-sm">
-      <Card.Header as="h2" className="bg-warning">
-        {pokemonData.name[0].toUpperCase() + pokemonData.name.substring(1)} #
-        {pokemonData.id}
-      </Card.Header>
+    <PokeCard
+      tamaño={"h2"}
+      encabezado={
+        pokemonData.name[0].toUpperCase() + pokemonData.name.substring(1)
+      }
+      hidden_id={true}
+    >
       <Row>
         <Col
           md={4}
@@ -66,7 +67,7 @@ function PokeInfo() {
           </Card.Body>
         </Col>
       </Row>
-    </Card>
+    </PokeCard>
   );
 }
 

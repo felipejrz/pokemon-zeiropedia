@@ -1,6 +1,6 @@
 import React from 'react'
 
-function PokeCart() {
+function PokeSearch() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function PokeCart() {
   )
 }
 
-export default PokeCart
+export default PokeSearch
