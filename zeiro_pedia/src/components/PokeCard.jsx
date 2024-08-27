@@ -1,22 +1,9 @@
-import { useContext } from "react";
-import { PokeContext } from "../context/PokeContext";
 import { Card } from "react-bootstrap";
 import { color } from "../data/colors";
-import PokeError from "./PokeError";
-import PokeSpinner from "./PokeSpinner";
 
-function PokeCard({ encabezado, tamaño, children, hidden_id }) {
-  const { pokemonData, loading, hasError } = useContext(PokeContext);
 
-  if (loading) {
-    return <PokeSpinner />;
-  }
-
-  if (hasError || !pokemonData) {
-    return <PokeError />;
-  }
-
-  const bgColor = color[pokemonData.types[0].type.name] || "#fff";
+function PokeCard({ pokemon, encabezado, tamaño, hidden_id, children }) {
+  const bgColor = color[pokemon.types[0].type.name] || "#fff";
   const textColor = [
     "darkblue",
     "darkred",
@@ -34,7 +21,7 @@ function PokeCard({ encabezado, tamaño, children, hidden_id }) {
         as={tamaño}
         style={{ backgroundColor: bgColor, color: textColor }}
       >
-        {encabezado} {!hidden_id ? null : `#${pokemonData.id}`}
+        {encabezado} {!hidden_id ? null : `#${pokemon.id}`}
       </Card.Header>
       {children}
     </Card>

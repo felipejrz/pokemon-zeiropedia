@@ -1,52 +1,42 @@
-import { Button, Container, Form, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { useContext } from "react";
+import { Button, Container, Form, Navbar } from "react-bootstrap";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Outlet } from "react-router-dom";
+import { color } from "../data/colors";
+import {PokeContext} from '../context/PokeContext'
 
-function PokeNavegation() {
+function PokeNavegation({ pokemonType = "danger" }) {
+  const {colorBar} = useContext(PokeContext)
+  const bgColor = color[colorBar] || "#fff";
+
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" style={{ backgroundColor: bgColor }}>
         <Container fluid>
-        <Navbar.Brand href="#home">
+          <Navbar.Brand href="">
             <img
-              alt=""
-              src="/img/logo.svg"
-              width="30"
-              height="30"
+              alt="Pokémon Logo"
+              src="https://1000marcas.net/wp-content/uploads/2020/01/Logo-Pokemon-640x400.png"
+              width="120"
+              height="75"
               className="d-inline-block align-top"
-            />{' '}
-            React Bootstrap
+            />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
-              navbarScroll
-            >
-              <Nav.Link href="#action1">Home</Nav.Link>
-              <Nav.Link href="#action2">Link</Nav.Link>
-              <NavDropdown title="Link" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link href="#" disabled>
-                Link
-              </Nav.Link>
-            </Nav>
-            <Form className="d-flex">
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-center">
+            <Form className="d-flex m-2">
               <Form.Control
-                type="search"
-                placeholder="Search"
+                type="text"
+                placeholder="Pokémon"
                 className="me-2"
-                aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button
+                variant="outline-light"
+                className="d-flex align-items-center px-4 btn-md"
+              >
+                <FaMagnifyingGlass className="me-2" />
+                Buscar
+              </Button>
             </Form>
           </Navbar.Collapse>
         </Container>

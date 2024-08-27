@@ -2,15 +2,14 @@ import { useEffect, useContext, useState } from "react";
 import { PokeContext } from "../context/PokeContext";
 import { ListGroup, Card } from "react-bootstrap";
 
-function PokeAbilities() {
-  const { pokemonData } = useContext(PokeContext);
+function PokeAbilities({pokemon}) {
   const [abilities, setAbilities] = useState([]);
 
   useEffect(() => {
     const fetchAbilities = async () => {
       try {
         const abilitiesData = await Promise.all(
-          pokemonData.abilities.map(async (abilityInfo) => {
+          pokemon.abilities.map(async (abilityInfo) => {
             const url_response = await fetch(abilityInfo.ability.url);
             const data = await url_response.json();
 
@@ -34,7 +33,7 @@ function PokeAbilities() {
       }
     };
     fetchAbilities();
-  }, [pokemonData]);
+  }, [pokemon]);
 
   return (
     <>

@@ -5,8 +5,6 @@ import  PokeHome from "./pages/PokeHome";
 import PokeSearch from "./pages/PokeSearch";
 import PokePages from "./pages/PokePages";
 
-
-
 function AppRouter() {
   return (
     <Routes>

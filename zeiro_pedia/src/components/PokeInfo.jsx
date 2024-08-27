@@ -1,26 +1,13 @@
-import { useContext } from "react";
-import { PokeContext } from "../context/PokeContext";
-import { Card, Row, Col, Image, ListGroup } from "react-bootstrap";
-import Types from "./Types";
+import {Card, Row, Col, Image, ListGroup } from "react-bootstrap";
+import PokeTypes from './PokeTypes'
 import PokeAbilities from "./PokeAbilities";
-import PokeError from "./PokeError";
-import PokeSpinner from "./PokeSpinner";
 import PokeCard from "./PokeCard";
 
-function PokeInfo() {
-  const { pokemonData, loading, hasError } = useContext(PokeContext);
-
-  if (loading) {
-    return <PokeSpinner />;
-  }
-
-  if (hasError || !pokemonData) {
-    return <PokeError />;
-  }
-  {console.log(pokemonData.species.url)}
+function PokeInfo({pokemonData}) {
 
   return (
     <PokeCard
+      pokemon={pokemonData}
       tamaño={"h2"}
       encabezado={
         pokemonData.name[0].toUpperCase() + pokemonData.name.substring(1)
@@ -46,7 +33,7 @@ function PokeInfo() {
               Información Pokémon
             </Card.Title>
             <Card.Subtitle>
-              <strong>Tipos: </strong> <Types />
+              <strong>Tipos: </strong> <PokeTypes pokemon={pokemonData} ></PokeTypes>
             </Card.Subtitle>
             <hr className="my-3 border-warning" />
 
@@ -63,7 +50,7 @@ function PokeInfo() {
             </ListGroup>
 
             <hr className="my-3 border-warning" />
-            <PokeAbilities />
+            <PokeAbilities pokemon = {pokemonData}/>
           </Card.Body>
         </Col>
       </Row>

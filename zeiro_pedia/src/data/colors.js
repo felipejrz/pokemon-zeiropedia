@@ -1,4 +1,5 @@
 export const color = {
+  inicio: "#dc3545",
   normal: "#999999",
   fighting: "#ffa202",
   flying: "#95c9ff",

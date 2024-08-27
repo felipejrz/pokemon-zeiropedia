@@ -1,22 +1,15 @@
-import React, { useContext } from "react";
-import { PokeContext } from "../context/PokeContext";
 import { Card, Table, Container } from "react-bootstrap";
-import PokeError from "./PokeError";
 import { data } from "../data/estadisticas_base";
-import PokeCard from "./PokeCard";
 import { color } from "../data/colors";
+import PokeCard from "./PokeCard";
 
-function PokeStats() {
-  const { pokemonData } = useContext(PokeContext);
-  if (!pokemonData) {
-    return <PokeError />;
-  }
+function PokeStats({ pokemonData }) {
   const bgColor = color[pokemonData.types[0].type.name];
 
   const getColor = (statValue) => {
     const percentage = statValue / 255;
     let red, green, blue;
-  
+
     if (percentage < 0.33) {
       red = 250;
       green = Math.floor(88 + (170 - 88) * (percentage / 0.33));
@@ -26,7 +19,7 @@ function PokeStats() {
       green = Math.floor(170 + (246 - 170) * ((percentage - 0.33) / 0.33));
       blue = Math.floor(88 + (88 - 88) * ((percentage - 0.33) / 0.33));
     } else {
-      red = Math.floor(250 - (192 * ((percentage - 0.66) / 0.34)));
+      red = Math.floor(250 - 192 * ((percentage - 0.66) / 0.34));
       green = 246;
       blue = Math.floor(88 + (170 - 88) * ((percentage - 0.66) / 0.34));
     }
@@ -44,7 +37,11 @@ function PokeStats() {
   }
 
   return (
-    <PokeCard tamaño={"h5"} encabezado={"Características base"}>
+    <PokeCard
+      pokemon={pokemonData}
+      tamaño={"h5"}
+      encabezado={"Características base"}
+    >
       <Card.Body>
         <Container fluid>
           <div className="table-responsive">
@@ -56,7 +53,7 @@ function PokeStats() {
                 borderRadius: "14px",
                 overflow: "hidden",
                 borderColor: bgColor,
-                maxWidth: '100%',
+                maxWidth: "100%",
               }}
             >
               <thead>
@@ -83,10 +80,12 @@ function PokeStats() {
                 {pokemonData.stats.map((x) => (
                   <tr key={x.stat.name}>
                     <td>
-                      <strong style={{ fontSize: '0.9rem' }}>{data[x.stat.name]}</strong>
+                      <strong style={{ fontSize: "0.9rem" }}>
+                        {data[x.stat.name]}
+                      </strong>
                     </td>
                     <td>{x.base_stat}</td>
-                    <td style={{ minWidth: "90px"}}>
+                    <td style={{ minWidth: "90px" }}>
                       <div
                         style={{
                           backgroundColor: "#f0f0f0",
@@ -134,15 +133,18 @@ function PokeStats() {
                   <td
                     style={{
                       borderBottomLeftRadius: "10px",
-                      backgroundColor: bgColor
+                      backgroundColor: bgColor,
                     }}
                   >
-                    <strong style={{ fontSize: '0.9rem' }}>Total</strong>
+                    <strong style={{ fontSize: "0.9rem" }}>Total</strong>
                   </td>
                   <td style={{ backgroundColor: bgColor }}>
-                    {pokemonData.stats.reduce((total, x) => total + x.base_stat, 0)}
+                    {pokemonData.stats.reduce(
+                      (total, x) => total + x.base_stat,
+                      0
+                    )}
                   </td>
-                  <td style={{ backgroundColor: bgColor }}/>
+                  <td style={{ backgroundColor: bgColor }} />
                   <td style={{ backgroundColor: bgColor }}>Mín</td>
                   <td style={{ backgroundColor: bgColor }}>Máx</td>
                   <td style={{ backgroundColor: bgColor }}>Mín</td>
