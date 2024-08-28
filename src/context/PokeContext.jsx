@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useForm } from "../hook/useForm";
+import { useLocation } from "react-router-dom";
+
 
 export const PokeContext = createContext();
 
@@ -8,12 +10,12 @@ export function PokeContextProvider({ children }) {
   const [allPokemon, setAllPokemon] = useState([]);
   const [globalPokemon, setGlobalPokemon] = useState([]);
   const [colorBar, setColorBar] = useState("inicio");
+  const [selectedPokemonDetails, setSelectedPokemonDetails] = useState([]);
   const { valueSearch, onInputChange, onResetForm } = useForm({
-		valueSearch: '',
-	});
+    valueSearch: "",
+  });
 
   const [loading, setLoading] = useState(true);
-
   const baseUrl = "https://pokeapi.co/api/v2/";
 
   // Función genérica para obtener datos de Pokémon
@@ -38,7 +40,7 @@ export function PokeContextProvider({ children }) {
     return Promise.all(promises);
   };
 
-  // Llamar 50 Pokémon a la API
+  // Llamar 52 Pokémon a la API
   const getAllPokemon = async (limit = 52) => {
     setLoading(true);
     const url = `${baseUrl}pokemon?limit=${limit}&offset=${offset}`;
@@ -50,24 +52,45 @@ export function PokeContextProvider({ children }) {
     setLoading(false);
   };
 
-  // Llamar a todos los Pokémon
+  // Llamar a todos los Pokémon (Cargar nombres y URLs)
   const getGlobalPokemon = async () => {
     setLoading(true);
-    const url = `${baseUrl}pokemon?limit=100000&offset=1000`;
-    const data = await fetchPokemonData(url);
-    if (data) {
-      const pokemonDetails = await fetchPokemonDetails(data.results);
-      setGlobalPokemon(pokemonDetails);
+    const cachedPokemon = localStorage.getItem("globalPokemon");
+    if (cachedPokemon) {
+      console.log("Carga de datos");
+      setGlobalPokemon(JSON.parse(cachedPokemon));
+    } else {
+      console.log("Se hace la llamada a la API");
+      const url = `${baseUrl}pokemon?limit=100000&offset=0`;
+      const data = await fetchPokemonData(url);
+      if (data) {
+        const essentialData = data.results.map((pokemon) => ({
+          name: pokemon.name,
+          url: pokemon.url,
+        }));
+        localStorage.setItem("globalPokemon", JSON.stringify(essentialData));
+        setGlobalPokemon(essentialData);
+      }
     }
     setLoading(false);
   };
 
-  // Obtener Pokémon por ID
-  const getPokemonById = async (id) => {
-    const url = `${baseUrl}pokemon/${id}`;
+  // Obtener detalles de un Pokémon por ID o nombre
+  const getPokemonByIdOrName = async (idOrName) => {
+    const url = `${baseUrl}pokemon/${idOrName}`;
     const data = await fetchPokemonData(url);
-    setColorBar(data.types[0].type.name);
+    if (data) {
+      setColorBar(data.types[0].type.name);
+    }
     return data;
+  };
+
+  // Obtener detalles de un arreglo de Pokémon
+  const getSelectedPokemonDetails = async (pokemonList) => {
+    setLoading(true);
+    const pokemonDetails = await fetchPokemonDetails(pokemonList);
+    setSelectedPokemonDetails(pokemonDetails);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -81,14 +104,16 @@ export function PokeContextProvider({ children }) {
   return (
     <PokeContext.Provider
       value={{
-        colorBar,
-        setColorBar,
+        colorBar, //Color de la navbar
+        setColorBar,//Cambiar el color
         valueSearch,
         onInputChange,
         onResetForm,
         allPokemon,
         globalPokemon,
-        getPokemonById,
+        getPokemonByIdOrName,
+        getSelectedPokemonDetails,
+        selectedPokemonDetails,
         loading,
       }}
     >

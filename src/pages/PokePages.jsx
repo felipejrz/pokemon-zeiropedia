@@ -7,14 +7,14 @@ import PokeStats from "../components/PokeStats";
 import PokeInfo from "../components/PokeInfo";
 
 function PokePages() {
-  const { getPokemonById } = useContext(PokeContext);
+  const { getPokemonByIdOrName } = useContext(PokeContext);
   const [loading, setLoading] = useState(true);
   const [pokemon, setPokemon] = useState({});
 
   const { id } = useParams();
 
   const fetchPokemon = async (id) => {
-    const data = await getPokemonById(id);
+    const data = await getPokemonByIdOrName(id);
     setPokemon(data);
     setLoading(false);
   };
@@ -25,6 +25,7 @@ function PokePages() {
 
   return (
     <Container fluid className="p-0 m-0">
+      {console.log("Pages")}
       {loading ? (
         <PokeSpinner />
       ) : (

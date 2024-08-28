@@ -13,10 +13,13 @@ function PokeNavegation() {
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
-    navigate("/search", {
-      state: valueSearch,
-    });
-    onResetForm();
+    
+    if (valueSearch.trim() !== "") {  // Asegúrate de que no sea una búsqueda vacía
+      navigate("/search", {
+        state: valueSearch,
+      });
+      onResetForm();
+    }
   };
 
   return (
@@ -40,7 +43,7 @@ function PokeNavegation() {
               <Form.Control
                 className="me-2"
                 type="search"
-                name = "valueSearch"
+                name="valueSearch"
                 value={valueSearch}
                 onChange={onInputChange}
                 placeholder="Pokémon"

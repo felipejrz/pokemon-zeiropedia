@@ -1,7 +1,6 @@
 import { Card } from "react-bootstrap";
 import { color } from "../data/colors";
 
-
 function PokeCard({ pokemon, encabezado, tamaño, hidden_id, children }) {
   const bgColor = color[pokemon.types[0].type.name] || "#fff";
   const textColor = [

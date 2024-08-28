@@ -37,6 +37,7 @@ function PokeHome() {
 
   return (
     <Container className="d-flex flex-column align-items-center mb-5">
+      {console.log("home")}
       <Button
         className="d-flex align-items-center px-4 my-4 mx-auto"
         variant="danger"
