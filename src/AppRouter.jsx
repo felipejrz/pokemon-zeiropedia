@@ -10,7 +10,7 @@ function AppRouter() {
       <Route path="/" element={<PokeNavegation />}>
         <Route index element={<PokeHome />} />
         <Route path="/pokemon/:id" element={<PokePages />} />
-        <Route path="search" element={<PokeSearch />} />
+        <Route path="/search" element={<PokeSearch />} />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>

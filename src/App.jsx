@@ -8,7 +8,6 @@ function App() {
       <AppRouter/>
     </PokeContextProvider>
   );
-
 }
 
 export default App
