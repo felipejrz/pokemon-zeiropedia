@@ -3,6 +3,15 @@ import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function PokeMiniCard({ pokemon, children }) {
+  const unwantedWords = ["resolute"];
+
+  // Procesamiento del nombre del Pokémon
+  const formattedName = pokemon.name
+    .split("-") // Divide el nombre en palabras
+    .filter((word) => !unwantedWords.includes(word)) // Elimina las palabras no deseadas
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
+    .join(" "); // Une las palabras con un espacio
+
   return (
     <>
       <Card
@@ -23,7 +32,7 @@ function PokeMiniCard({ pokemon, children }) {
             <Col xs="auto" className="d-flex align-items-center">
               {/* Cámara grande simulada */}
               <div
-              className="p-0"
+                className="p-0"
                 style={{
                   width: "30px",
                   height: "30px",
@@ -48,7 +57,7 @@ function PokeMiniCard({ pokemon, children }) {
             </Col>
             <Col xs="auto" className="d-flex align-items-center p-0">
               {/* Puntos Rojo, Amarillo, Verde */}
-              <div style={{ display: "flex", alignItems: "center"}}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <div
                   style={{
                     width: "15px",
@@ -81,7 +90,7 @@ function PokeMiniCard({ pokemon, children }) {
               </div>
             </Col>
             <Col className="">
-              {pokemon.name[0].toUpperCase() + pokemon.name.substring(1)} #
+              {formattedName} #
               {pokemon.id}
             </Col>
           </Row>

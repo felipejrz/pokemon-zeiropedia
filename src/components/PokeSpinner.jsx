@@ -1,4 +1,3 @@
-import React from "react";
 import { Spinner } from "react-bootstrap";
 
 function PokeSpinner() {
@@ -8,7 +7,7 @@ function PokeSpinner() {
       style={{ minHeight: "100vh" }}
     >
       <Spinner animation="border" role="status"></Spinner>
-      <span className="sr-only">Loading...</span>
+      <span className="sr-only"></span>
     </div>
   );
 }

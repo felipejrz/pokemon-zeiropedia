@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
-import { PokeContext } from "../context/PokeContext";
 import { useParams } from "react-router-dom";
-import PokeSpinner from "../components/PokeSpinner";
+import { PokeContext } from "../context/PokeContext";
 import { Container, Row, Col } from "react-bootstrap";
+import PokeSpinner from "../components/PokeSpinner";
 import PokeStats from "../components/PokeStats";
 import PokeInfo from "../components/PokeInfo";
 

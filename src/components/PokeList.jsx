@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { PokeContext } from "../context/PokeContext";
-import PokeMiniCard from "./PokeMiniCard";
 import { Container, Row, Col } from "react-bootstrap";
+import PokeMiniCard from "./PokeMiniCard";
 import PokeTypes from "./PokeTypes";
 import PokePhoto from "./PokePhoto";
 

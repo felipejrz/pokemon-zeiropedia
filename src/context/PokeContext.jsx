@@ -9,8 +9,8 @@ export function PokeContextProvider({ children }) {
   const [globalPokemon, setGlobalPokemon] = useState([]);
   const [colorBar, setColorBar] = useState("inicio");
   const { valueSearch, onInputChange, onResetForm } = useForm({
-    valueSearch: "",
-  });
+		valueSearch: '',
+	});
 
   const [loading, setLoading] = useState(true);
 
@@ -53,7 +53,7 @@ export function PokeContextProvider({ children }) {
   // Llamar a todos los Pokémon
   const getGlobalPokemon = async () => {
     setLoading(true);
-    const url = `${baseUrl}pokemon?limit=200&offset=0`;
+    const url = `${baseUrl}pokemon?limit=100000&offset=1000`;
     const data = await fetchPokemonData(url);
     if (data) {
       const pokemonDetails = await fetchPokemonDetails(data.results);

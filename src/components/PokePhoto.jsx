@@ -1,7 +1,6 @@
 import { Image } from "react-bootstrap";
-import { types } from "../data/number_types";
 
-function PokePhoto({pokemon}) {
+function PokePhoto({ pokemon }) {
   return (
     <>
       <Image

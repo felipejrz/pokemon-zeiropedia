@@ -6,11 +6,10 @@ import { PokeContext } from "../context/PokeContext";
 
 function PokeHome() {
   const { setColorBar } = useContext(PokeContext);
-  
+
   useEffect(() => {
     setColorBar("inicio");
-  }, [setColorBar])
-  
+  }, [setColorBar]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -37,7 +36,7 @@ function PokeHome() {
   ];
 
   return (
-    <Container className="d-flex flex-column align-items-center">
+    <Container className="d-flex flex-column align-items-center mb-5">
       <Button
         className="d-flex align-items-center px-4 my-4 mx-auto"
         variant="danger"
