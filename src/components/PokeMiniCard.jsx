@@ -1,19 +1,23 @@
 import React from "react";
 import { Card, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function PokeMiniCard({ pokemon, children }) {
   const unwantedWords = ["resolute"];
 
-  // Procesamiento del nombre del Pokémon
   const formattedName = pokemon.name
-    .split("-") // Divide el nombre en palabras
-    .filter((word) => !unwantedWords.includes(word)) // Elimina las palabras no deseadas
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
-    .join(" "); // Une las palabras con un espacio
+    .split("-")
+    .filter((word) => !unwantedWords.includes(word))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
   return (
-    <>
+    <motion.div
+      whileHover={{ scale: 1.05, boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)" }}
+      transition={{ duration: 0.3 }}
+      className="mb-4"
+    >
       <Card
         as={Link}
         to={`/pokemon/${pokemon.id}`}
@@ -90,8 +94,7 @@ function PokeMiniCard({ pokemon, children }) {
               </div>
             </Col>
             <Col className="">
-              {formattedName} #
-              {pokemon.id}
+              {formattedName} #{pokemon.id}
             </Col>
           </Row>
         </Card.Header>
@@ -100,7 +103,7 @@ function PokeMiniCard({ pokemon, children }) {
           {children}
         </Card.Body>
       </Card>
-    </>
+    </motion.div>
   );
 }
 

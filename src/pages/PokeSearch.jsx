@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { PokeContext } from "../context/PokeContext";
 import { Container, Row, Col } from "react-bootstrap";
@@ -25,7 +25,7 @@ function PokeSearch() {
         getSelectedPokemonDetails(filtered);
       }
     }
-  }, [globalPokemon, location.state]); // Dependencias correctas
+  }, [globalPokemon, location.state]);
 
   useEffect(() => {
     setColorBar("inicio");

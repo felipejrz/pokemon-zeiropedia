@@ -1,16 +1,21 @@
-import {Card, Row, Col, Image, ListGroup } from "react-bootstrap";
-import PokeTypes from './PokeTypes'
+import { Card, Row, Col, Image, ListGroup } from "react-bootstrap";
+import PokeTypes from "./PokeTypes";
 import PokeAbilities from "./PokeAbilities";
 import PokeCard from "./PokeCard";
+import PokePhoto from "./PokePhoto";
 
-function PokeInfo({pokemonData}) {
+function PokeInfo({ pokemonData }) {
+  const formattedName = pokemonData.name
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" "); 
 
   return (
     <PokeCard
       pokemon={pokemonData}
       tamaño={"h2"}
       encabezado={
-        pokemonData.name[0].toUpperCase() + pokemonData.name.substring(1)
+        formattedName
       }
       hidden_id={true}
     >
@@ -19,13 +24,7 @@ function PokeInfo({pokemonData}) {
           md={4}
           className="d-flex justify-content-center align-items-center"
         >
-          <Image
-            fluid
-            rounded
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonData.id}.png`}
-            alt={pokemonData.name}
-            className="m-3"
-          />
+          <PokePhoto pokemon={pokemonData} />
         </Col>
         <Col md={8}>
           <Card.Body>
@@ -33,7 +32,8 @@ function PokeInfo({pokemonData}) {
               Información Pokémon
             </Card.Title>
             <Card.Subtitle>
-              <strong>Tipos: </strong> <PokeTypes pokemon={pokemonData} ></PokeTypes>
+              <strong>Tipos: </strong>{" "}
+              <PokeTypes pokemon={pokemonData}></PokeTypes>
             </Card.Subtitle>
             <hr className="my-3 border-warning" />
 
@@ -50,7 +50,7 @@ function PokeInfo({pokemonData}) {
             </ListGroup>
 
             <hr className="my-3 border-warning" />
-            <PokeAbilities pokemon = {pokemonData}/>
+            <PokeAbilities pokemon={pokemonData} />
           </Card.Body>
         </Col>
       </Row>

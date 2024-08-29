@@ -55,6 +55,7 @@ export function PokeContextProvider({ children }) {
   // Llamar a todos los Pokémon (Cargar nombres y URLs)
   const getGlobalPokemon = async () => {
     setLoading(true);
+    //localStorage.removeItem("globalPokemon");
     const cachedPokemon = localStorage.getItem("globalPokemon");
     if (cachedPokemon) {
       console.log("Carga de datos");
