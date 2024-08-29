@@ -2,6 +2,10 @@
 
 Una Pokedex interactiva construida con React, Vite, React Bootstrap y Framer Motion para animaciones. Explora Pokémon, busca por tipo y disfruta de una experiencia visual enriquecida con animaciones.
 
+## Sitio Web 🌐
+
+Puedes visitar el sitio web en [https://felipejrz.github.io/pokemon-zeiropedia/](https://felipejrz.github.io/pokemon-zeiropedia/) para ver la aplicación en acción.
+
 ## Características 🚀
 
 - **Lista Inicial de Pokémon:** Muestra una lista pequeña de Pokémon en la página principal.
@@ -33,9 +37,7 @@ Una Pokedex interactiva construida con React, Vite, React Bootstrap y Framer Mot
    npm run dev
 
 4. **Accede a la aplicación en tu navegador:**
-    Abre http://localhost:<Pue para ver la aplicación en acción.
-
-La aplicación se ejecutará en http://localhost:5173 (o el puerto especificado en la consola).
+   La aplicación se ejecutará en http://localhost:5173 (o el puerto especificado en la consola).
 
 ## Uso 🧭
 
