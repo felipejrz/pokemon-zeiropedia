@@ -22,4 +22,33 @@ Una Pokedex interactiva construida con React, Vite, React Bootstrap y Framer Mot
 1. **Clona el repositorio:**
 
    ```bash
-   git clone https://github.com/tu-usuario/pokedex-react-app.git
+   git clone https://github.com/felipejrz/pokemon-zeiropedia.git
+
+2. **Instala las dependencias del proyecto:**
+   ```bash
+   npm install
+
+3. **Inicia el servidor de desarrollo:**
+   ```bash
+   npm run dev
+
+4. **Accede a la aplicación en tu navegador:**
+    Abre http://localhost:<Pue para ver la aplicación en acción.
+
+La aplicación se ejecutará en http://localhost:5173 (o el puerto especificado en la consola).
+
+## Uso 🧭
+
+- **Página Principal:** Visualiza una lista inicial de Pokémon con la opción de expandir la lista.
+- **Búsqueda y Filtros:** Usa el campo de búsqueda para encontrar Pokémon por nombre y utiliza los filtros para buscar por tipo.
+- **Detalles del Pokémon:** Haz clic en un Pokémon para ver información adicional y características detalladas.
+
+## Contribuciones 🤝
+
+Las contribuciones son bienvenidas. Si tienes alguna sugerencia o mejora, por favor, abre un "issue" o realiza un "pull request" en GitHub.
+
+## Autor ✨
+
+- **Felipe Jerez** - [felipejrz](https://github.com/felipejrz)
+
+
